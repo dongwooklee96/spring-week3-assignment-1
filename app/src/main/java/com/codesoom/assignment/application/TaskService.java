@@ -1,54 +1,46 @@
 package com.codesoom.assignment.application;
 
-import com.codesoom.assignment.TaskNotFoundException;
-import com.codesoom.assignment.models.Task;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.codesoom.assignment.domain.Task;
+import com.codesoom.assignment.domain.TaskRepository;
 
 @Service
 public class TaskService {
-    private List<Task> tasks = new ArrayList<>();
-    private Long newId = 0L;
+    final private TaskRepository taskRepository;
+
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     public List<Task> getTasks() {
-        return tasks;
+        return taskRepository.findAll();
     }
 
     public Task getTask(Long id) {
-        return tasks.stream()
-                .filter(task -> task.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new TaskNotFoundException(id));
+        return taskRepository.find(id);
     }
 
     public Task createTask(Task source) {
         Task task = new Task();
-        task.setId(generateId());
         task.setTitle(source.getTitle());
 
-        tasks.add(task);
-
-        return task;
+        return taskRepository.save(task);
     }
 
     public Task updateTask(Long id, Task source) {
-        Task task = getTask(id);
+        Task task = taskRepository.find(id);
+
         task.setTitle(source.getTitle());
 
         return task;
     }
 
     public Task deleteTask(Long id) {
-        Task task = getTask(id);
-        tasks.remove(task);
-
-        return task;
+        Task task = taskRepository.find(id);
+        return taskRepository.remove(task);
     }
 
-    private Long generateId() {
-        newId += 1;
-        return newId;
-    }
 }
