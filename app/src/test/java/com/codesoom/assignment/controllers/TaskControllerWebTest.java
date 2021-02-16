@@ -19,7 +19,7 @@ import java.util.List;
 
 import com.codesoom.assignment.TaskNotFoundException;
 import com.codesoom.assignment.application.TaskService;
-import com.codesoom.assignment.models.Task;
+import com.codesoom.assignment.domain.Task;
 
 @SpringBootTest
 @AutoConfigureMockMvc

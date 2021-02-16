@@ -1,7 +1,6 @@
-package com.codesoom.assignment.models;
+package com.codesoom.assignment.domain;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

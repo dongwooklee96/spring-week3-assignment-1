@@ -1,29 +1,26 @@
 package com.codesoom.assignment.application;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.BDDAssumptions.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.codesoom.assignment.TaskNotFoundException;
-import com.codesoom.assignment.models.Task;
+import com.codesoom.assignment.domain.Task;
+import com.codesoom.assignment.domain.TaskRepository;
 
 class TaskServiceTest {
 
-    private Task task;
+    private TaskRepository taskRepository;
     private TaskService taskService;
 
     @BeforeEach
     void setUp() {
-        task = new Task();
-        taskService = new TaskService();
+        TaskRepository taskRepository = new TaskRepository();
+
+        taskService = new TaskService(taskRepository);
     }
 
     @Test

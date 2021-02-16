@@ -2,7 +2,6 @@ package com.codesoom.assignment.controllers;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import com.codesoom.assignment.TaskNotFoundException;
 import com.codesoom.assignment.application.TaskService;
-import com.codesoom.assignment.models.Task;
+import com.codesoom.assignment.domain.Task;
 
 class TaskControllerTest {
 
