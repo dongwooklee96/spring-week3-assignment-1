@@ -2,12 +2,16 @@ package com.codesoom.assignment.application;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
+import com.codesoom.assignment.TaskNotFoundException;
 import com.codesoom.assignment.domain.Task;
 import com.codesoom.assignment.domain.TaskRepository;
 
 @Service
+@Transactional
 public class TaskService {
     final private TaskRepository taskRepository;
 
@@ -20,7 +24,8 @@ public class TaskService {
     }
 
     public Task getTask(Long id) {
-        return taskRepository.find(id);
+        return taskRepository.findById(id)
+            .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     public Task createTask(Task source) {
@@ -31,7 +36,8 @@ public class TaskService {
     }
 
     public Task updateTask(Long id, Task source) {
-        Task task = taskRepository.find(id);
+        Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new TaskNotFoundException(id));
 
         task.setTitle(source.getTitle());
 
@@ -39,8 +45,11 @@ public class TaskService {
     }
 
     public Task deleteTask(Long id) {
-        Task task = taskRepository.find(id);
-        return taskRepository.remove(task);
-    }
+        Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new TaskNotFoundException(id));
 
+        taskRepository.delete(task);
+
+        return task;
+    }
 }

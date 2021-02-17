@@ -1,43 +1,14 @@
 package com.codesoom.assignment.domain;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.stereotype.Repository;
+public interface TaskRepository {
+    List<Task> findAll();
 
-import com.codesoom.assignment.TaskNotFoundException;
+    Optional<Task> findById(Long id);
 
-@Repository
-public class TaskRepository {
-    private List<Task> tasks = new ArrayList<>();
-    private Long newId = 0L;
+    Task save(Task task);
 
-    public List<Task> findAll() {
-        return tasks;
-    }
-
-    public Task find(Long id) {
-        return tasks.stream()
-            .filter(task -> task.getId().equals(id))
-            .findFirst()
-            .orElseThrow(() -> new TaskNotFoundException(id));
-    }
-
-    public Task save(Task task) {
-        task.setId(generateId());
-
-        tasks.add(task);
-
-        return task;
-    }
-
-    public Task remove(Task task) {
-        tasks.remove(task);
-        return task;
-    }
-
-    public Long generateId() {
-        newId += 1;
-        return newId;
-    }
+    void delete(Task task);
 }
